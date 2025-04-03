@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple C Code Compiler</title>
+    <style>
+        /* General body style */
+        body {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #1e1e1e; /* Dark background like VS Code */
+            color: #dcdcdc; /* Light gray text color */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #dcdcdc;
+        }
+
+        /* Textarea for writing code */
+        #codeArea {
+            width: 80%;
+            height: 250px;
+            padding: 15px;
+            background-color: #2d2d2d; /* Darker background */
+            color: #dcdcdc;
+            border: 1px solid #444444; /* Dark border */
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: none;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button style */
+        button {
+            padding: 10px 20px;
+            background-color: #0078d4; /* Blue button similar to VS Code */
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #006bb3; /* Darker blue for hover effect */
+        }
+
+        /* Output container */
+        #outputContainer {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #252526; /* Dark background for output */
+            border-radius: 8px;
+            border: 1px solid #444444; /* Matching border */
+            display: none;
+        }
+
+        /* Output text */
+        #output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #dcdcdc;
+        }
+
+        /* Keyword highlighting */
+        .keyword {
+            color: #569cd6; /* Blue for keywords like 'int', 'return' */
+            font-weight: bold;
+        }
+
+        .string {
+            color: #d69d85; /* Light brown for strings */
+        }
+
+        .comment {
+            color: #6a9955; /* Green for comments */
+        }
+
+        .function {
+            color: #dcdcaa; /* Yellowish for function names */
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple C Code Compiler</h1>
+
+    <textarea id="codeArea" placeholder="Write your C code here..."></textarea><br>
+    <button onclick="runCode()">Run Code</button>
+
+    <div id="outputContainer">
+        <h2>Output:</h2>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        const clientId = "YOUR_CLIENT_ID";  // Replace with your JDoodle Client ID
+        const clientSecret = "YOUR_CLIENT_SECRET";  // Replace with your JDoodle Client Secret
+
+        function runCode() {
+            const code = document.getElementById('codeArea').value;
+
+            // Show loading message
+            document.getElementById('output').textContent = "Compiling...";
+            document.getElementById('outputContainer').style.display = "block";
+
+            const requestData = {
+                script: code,
+                language: "c",
+                versionIndex: "0", // Use default version of C
+                clientId: clientId,
+                clientSecret: clientSecret
+            };
+
+            fetch("https://api.jdoodle.com/v1/execute", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.output) {
+                    document.getElementById('output').textContent = data.output;
+                } else if (data.error) {
+                    document.getElementById('output').textContent = `Error: ${data.error}`;
+                } else {
+                    document.getElementById('output').textContent = "Unknown error occurred.";
+                }
+            })
+            .catch(error => {
+                document.getElementById('output').textContent = "<<<<UPDATING SOON >>>>";
+            });
+        }
+    </script>
+</body>
+</html>
