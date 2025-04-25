@@ -93,7 +93,7 @@
 </head>
 <body>
     <div class="container">
-        <button class="button" onclick="showProgram('linearSearch')">Linear Search</button>
+        <button class="button" onclick="showProgram('linearSearch')">01 a). Linear Search</button>
         <div id="linearSearch" class="program-container content">
             <pre>
 #include &lt;stdio.h&gt;
@@ -123,7 +123,7 @@ int main() {
             <a href="https://youtu.be/ZR5HlCjLPNw?si=7wwDSZNnlFrh2q8y" target="_blank">Watch Linear Search Video</a>
         </div>
 
-        <button class="button" onclick="showProgram('binarySearch')">Binary Search</button>
+        <button class="button" onclick="showProgram('binarySearch')">01 b). Binary Search</button>
         <div id="binarySearch" class="program-container content">
             <pre>
 #include &lt;stdio.h&gt;
@@ -158,96 +158,85 @@ int main() {
             <a href="https://youtu.be/MQJjMvd-LFE?si=aGbJ_pQTloSNkL-A" target="_blank">Watch Binary Search Video</a>
         </div>
 
-        <button class="button" onclick="showProgram('stringOperations')">String Operations</button>
-        <div id="stringOperations" class="program-container content">
-            <pre>
-#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
+      
 
-void reverseString(char str[]) {
-    int n = strlen(str);
-    for (int i = 0; i &lt; n / 2; i++) {
-        char temp = str[i];
-        str[i] = str[n - i - 1];
-        str[n - i - 1] = temp;
-    }
-}
-
-int main() {
-    char str[] = "Hello, World!";
-    reverseString(str);
-    printf("Reversed string: %s\n", str);
-    return 0;
-}
-            </pre>
-            <a href="https://youtu.be/Y-IClz76F_k?si=y_erttnv6JAiUSVF" target="_blank">Watch String Operations Video</a>
-        </div>
-
-        <button class="button" onclick="showProgram('insertionSort')">Insertion Sort</button>
+        <button class="button" onclick="showProgram('insertionSort')">03. Insertion Sort</button>
         <div id="insertionSort" class="program-container content">
             <pre>
 #include &lt;stdio.h&gt;
 
-void insertionSort(int arr[], int size) {
-    for (int i = 1; i &lt; size; i++) {
-        int key = arr[i];
-        int j = i - 1;
-        while (j &gt;= 0 && arr[j] &gt; key) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
-    }
+// Function to perform Insertion Sort
+void insertionSort(int arr[], int n)
+{
+    for (int i = 1; i < n; i++) 
+    {
+      int key = arr[i];
+      int j = i - 1;
+      while (j >= 0 && arr[j] < key) 
+     { 
+       // Sorting in descending order
+       arr[j + 1] = arr[j];
+       j = j - 1;
+     }
+     arr[j + 1] = key;
+     }
 }
 
-int main() {
-    int arr[] = {12, 11, 13, 5, 6};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    insertionSort(arr, size);
-    printf("Sorted array: ");
-    for (int i = 0; i &lt; size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
+// Function to perform Selection Sort
+void selectionSort(int arr[], int n) 
+{
+    for (int i = 0; i < n - 1; i++) 
+   {
+    int max_idx = i;
+    for (int j = i + 1; j < n; j++) 
+    {
+    if (arr[j] > arr[max_idx]) 
+    {
+      // Sorting in descending order
+      max_idx = j;
+     }
+     }
+     // Swap
+     int temp = arr[max_idx];
+     arr[max_idx] = arr[i];
+     arr[i] = temp;
+     }
+     }
+     // Function to print the array
+     void printArray(int arr[], int n)
+     {
+        for (int i = 0; i < n; i++) 
+       {
+          printf("%d ", arr[i]);
+       }
+        printf("\n");
+      }
+     // Main function
+     int main()
+     {
+       int arr[] = {75, 8, 1, 16, 48, 3, 7, 0};
+       int n = sizeof(arr) / sizeof(arr[0]);
+       int insertionSorted[n], selectionSorted[n];
+       // Copy original array for both sorting methods
+      for (int i = 0; i < n; i++) {
+      insertionSorted[i] = arr[i];
+      selectionSorted[i] = arr[i];
+     }
+     // Perform Insertion Sort
+     insertionSort(insertionSorted, n);
+     printf("Insertion Sort (Descending): ");
+     printArray(insertionSorted, n);
+    // Perform Selection Sort
+    selectionSort(selectionSorted, n);
+    printf("Selection Sort (Descending): ");
+    printArray(selectionSorted, n);
     return 0;
-}
+    }
             </pre>
             <a href="https://youtu.be/59JrBHXB0FQ?si=b-cGYMYk-rPD6mAA" target="_blank">Watch Insertion Sort Video</a>
         </div>
 
-        <button class="button" onclick="showProgram('selectionSort')">Selection Sort</button>
-        <div id="selectionSort" class="program-container content">
-            <pre>
-#include &lt;stdio.h&gt;
-
-void selectionSort(int arr[], int size) {
-    for (int i = 0; i &lt; size - 1; i++) {
-        int minIndex = i;
-        for (int j = i + 1; j &lt; size; j++) {
-            if (arr[j] &lt; arr[minIndex]) {
-                minIndex = j;
-            }
-        }
-        int temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
-    }
-}
-
-int main() {
-    int arr[] = {29, 10, 14, 37, 13};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    selectionSort(arr, size);
-    printf("Sorted array: ");
-    for (int i = 0; i &lt; size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-    return 0;
-}
-            </pre>
-            <a href="https://youtu.be/P-ySMWaGD7Y?si=86hPauaWmgeKWLYt" target="_blank">Watch Selection Sort Video</a>
-        </div>
+      
 
         <!-- Additional Buttons and Programs -->
         <button class="button" onclick="showProgram('towerOfHanoi')">Tower of Hanoi</button>
@@ -428,7 +417,7 @@ int main() {
             </div>
             
             <h2>try to write program on your own by clicking the link below</h2>
-            <a href="https://sites.google.com/view/writing-and-complier-for-ds/writing-pad" target="_blank">Open a New Page to Type program </a>
+            <a href="https://www.programiz.com/c-programming/online-compiler/"_blank">Open a New Page to Type program </a>
     
     
     </div>
