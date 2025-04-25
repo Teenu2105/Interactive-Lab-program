@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Buttons with C Programs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            overflow-y: auto; /* Allow scrolling */
+        }
+    
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1; /* Allow container to grow and fill available space */
+        }
+    
+        /* Blue button styles with glowing effect */
+        .button {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #007BFF; /* Blue color */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 5px #007BFF;
+            transition: all 0.3s ease-in-out;
+        }
+    
+        /* Glowing effect when hovering over the button */
+        .button:hover {
+            background-color: #0056b3; /* Darker blue for hover */
+            box-shadow: 0 0 20px #007BFF, 0 0 30px #007BFF, 0 0 40px #007BFF; /* Glowing effect */
+            transform: scale(1.05); /* Slightly enlarges the button */
+        }
+    
+        /* Content block styles */
+        .content {
+            display: none;
+            margin-top: 10px;
+            padding: 20px;
+            background-color: #dfdbdb;
+            border-radius: 8px;
+            overflow: auto; /* Make sure content is scrollable if needed */
+            max-height: 60vh; /* Limit the max height to avoid pushing page content off-screen */
+        }
+    
+        /* Styling the program code block */
+        .content pre {
+            font-size: 14px;
+            font-family: Arial;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #000000;
+            margin: 0;
+        }
+    
+        /* Styling for the links */
+        .content a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+    
+        .content a:hover {
+            text-decoration: underline;
+          
+        }
+    
+        /* Active content when shown */
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="button" onclick="showProgram('linearSearch')">Linear Search</button>
+        <div id="linearSearch" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+int linearSearch(int arr[], int size, int target) {
+    for (int i = 0; i &lt; size; i++) {
+        if (arr[i] == target) {
+            return i; // target found at index i
+        }
+    }
+    return -1; // target not found
+}
+
+int main() {
+    int arr[] = {5, 3, 8, 4, 2};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 8;
+    int result = linearSearch(arr, size, target);
+    if (result != -1) {
+        printf("Found at index %d\n", result);
+    } else {
+        printf("Not found\n");
+    }
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/ZR5HlCjLPNw?si=7wwDSZNnlFrh2q8y" target="_blank">Watch Linear Search Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('binarySearch')">Binary Search</button>
+        <div id="binarySearch" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+int binarySearch(int arr[], int size, int target) {
+    int left = 0, right = size - 1;
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target)
+            return mid; // target found
+        else if (arr[mid] &lt; target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1; // target not found
+}
+
+int main() {
+    int arr[] = {1, 3, 4, 5, 8, 9, 10};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 5;
+    int result = binarySearch(arr, size, target);
+    if (result != -1) {
+        printf("Found at index %d\n", result);
+    } else {
+        printf("Not found\n");
+    }
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/MQJjMvd-LFE?si=aGbJ_pQTloSNkL-A" target="_blank">Watch Binary Search Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('stringOperations')">String Operations</button>
+        <div id="stringOperations" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void reverseString(char str[]) {
+    int n = strlen(str);
+    for (int i = 0; i &lt; n / 2; i++) {
+        char temp = str[i];
+        str[i] = str[n - i - 1];
+        str[n - i - 1] = temp;
+    }
+}
+
+int main() {
+    char str[] = "Hello, World!";
+    reverseString(str);
+    printf("Reversed string: %s\n", str);
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/Y-IClz76F_k?si=y_erttnv6JAiUSVF" target="_blank">Watch String Operations Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('insertionSort')">Insertion Sort</button>
+        <div id="insertionSort" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+void insertionSort(int arr[], int size) {
+    for (int i = 1; i &lt; size; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j &gt;= 0 && arr[j] &gt; key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    insertionSort(arr, size);
+    printf("Sorted array: ");
+    for (int i = 0; i &lt; size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/59JrBHXB0FQ?si=b-cGYMYk-rPD6mAA" target="_blank">Watch Insertion Sort Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('selectionSort')">Selection Sort</button>
+        <div id="selectionSort" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+void selectionSort(int arr[], int size) {
+    for (int i = 0; i &lt; size - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j &lt; size; j++) {
+            if (arr[j] &lt; arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}
+
+int main() {
+    int arr[] = {29, 10, 14, 37, 13};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    selectionSort(arr, size);
+    printf("Sorted array: ");
+    for (int i = 0; i &lt; size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/P-ySMWaGD7Y?si=86hPauaWmgeKWLYt" target="_blank">Watch Selection Sort Video</a>
+        </div>
+
+        <!-- Additional Buttons and Programs -->
+        <button class="button" onclick="showProgram('towerOfHanoi')">Tower of Hanoi</button>
+        <div id="towerOfHanoi" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+void towerOfHanoi(int n, char from, char to, char aux) {
+    if (n == 1) {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    towerOfHanoi(n-1, from, aux, to);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    towerOfHanoi(n-1, aux, to, from);
+}
+
+int main() {
+    int n = 3; // Number of disks
+    towerOfHanoi(n, 'A', 'C', 'B');
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/8qrWD2P1IfU?si=YmaM5dCKyL1PFMa8" target="_blank">Watch Tower of Hanoi Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('bubbleSort')">Bubble Sort</button>
+        <div id="bubbleSort" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+void bubbleSort(int arr[], int size) {
+    for (int i = 0; i &lt; size-1; i++) {
+        for (int j = 0; j &lt; size-i-1; j++) {
+            if (arr[j] &gt; arr[j+1]) {
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, size);
+    printf("Sorted array: ");
+    for (int i = 0; i &lt; size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/o4bAoo_gFBU" target="_blank">Watch Bubble Sort Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('linkedList')">Linked List</button>
+        <div id="linkedList" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void printList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -&gt; ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    struct Node* second = NULL;
+    struct Node* third = NULL;
+
+    head = (struct Node*)malloc(sizeof(struct Node));
+    second = (struct Node*)malloc(sizeof(struct Node));
+    third = (struct Node*)malloc(sizeof(struct Node));
+
+    head-&gt;data = 1;
+    head-&gt;next = second;
+
+    second-&gt;data = 2;
+    second-&gt;next = third;
+
+    third-&gt;data = 3;
+    third-&gt;next = NULL;
+
+    printList(head);
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/4URRyhUlQco?si=zoquriy-6wDFkSSH" target="_blank">Watch Linked List Video</a>
+        </div>
+
+        <button class="button" onclick="showProgram('recursionGCD')">Recursion GCD</button>
+        <div id="recursionGCD" class="program-container content">
+            <pre>
+#include &lt;stdio.h&gt;
+
+int gcd(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
+int main() {
+    int a = 56, b = 98;
+    printf("GCD of %d and %d is %d\n", a, b, gcd(a, b));
+    return 0;
+}
+            </pre>
+            <a href="https://youtu.be/6lrQ8w2zC1g?si=eSA67UiTCZnjP98b" target="_blank">Watch Recursion GCD Video</a>
+        </div>
+
+        <div class="container">
+            <!-- Existing buttons and content blocks -->
+    
+            <button class="button" onclick="showProgram('stack')">Working of Stack</button>
+            <div id="stack" class="program-container content">
+                <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    
+    #define MAX 5
+    int stack[MAX];
+    int top = -1;
+    
+    void push(int value) {
+        if (top == MAX - 1) {
+            printf("Stack Overflow\n");
+        } else {
+            stack[++top] = value;
+            printf("Pushed %d to stack\n", value);
+        }
+    }
+    
+    void pop() {
+        if (top == -1) {
+            printf("Stack Underflow\n");
+        } else {
+            printf("Popped %d from stack\n", stack[top--]);
+        }
+    }
+    
+    void display() {
+        if (top == -1) {
+            printf("Stack is empty\n");
+        } else {
+            printf("Stack contents: ");
+            for (int i = top; i &gt;= 0; i--) {
+                printf("%d ", stack[i]);
+            }
+            printf("\n");
+        }
+    }
+    
+    int main() {
+        push(10);
+        push(20);
+        push(30);
+        display();
+        pop();
+        display();
+        return 0;
+    }
+                </pre>
+                <a href="https://www.youtube.com/watch?v=dhI4rWJlOeY" target="_blank">Watch Stack Working Video</a>
+            </div>
+            
+            <h2>try to write program on your own by clicking the link below</h2>
+            <a href="https://sites.google.com/view/writing-and-complier-for-ds/writing-pad" target="_blank">Open a New Page to Type program </a>
+    
+    
+    </div>
+
+    <script>
+        function showProgram(programId) {
+            // Hide all program contents
+            const contents = document.querySelectorAll('.program-container');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show the selected program content
+            const selectedProgram = document.getElementById(programId);
+            selectedProgram.classList.add('active');
+        }
+    </script>
+</body>
+</html>
